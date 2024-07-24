@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Word({ wor: w }) {
+export default function Word({ word: w }) {
   const [word, setWord] = useState(w);
   const [isShow, setIsShow] = useState(false);
   const [isDone, setIsDone] = useState(word.isDone);
@@ -18,22 +18,26 @@ export default function Word({ wor: w }) {
       body: JSON.stringify({
         ...word,
         isDone: !isDone,
-      }).then((res) => {
-        if (res.ok) {
-          setIsDone(!isDone);
-        }
       }),
+    }).then((res) => {
+      if (res.ok) {
+        setIsDone(!isDone);
+      }
     });
   }
+
   function del() {
     if (window.confirm("삭제 하시겠습니까?")) {
       fetch(`http://localhost:3000/words/${word.id}`, {
         method: "DELETE",
       }).then((res) => {
-        if (res.ok) setWord({ id: 0 });
+        if (res.ok) {
+          setWord({ id: 0 });
+        }
       });
     }
   }
+
   if (word.id === 0) {
     return null;
   }

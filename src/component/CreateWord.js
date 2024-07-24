@@ -1,10 +1,14 @@
 import { useRef } from "react";
 import useFetch from "../Hooks/useFetch";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateWord() {
   const days = useFetch("http://localhost:3000/days");
-  const history = useHistory();
+  const navigate = useNavigate();
+  const engRef = useRef(null);
+  const korRef = useRef(null);
+  const dayRef = useRef(null);
+
   function onSubmit(e) {
     e.preventDefault();
 
@@ -18,18 +22,15 @@ export default function CreateWord() {
         eng: engRef.current.value,
         kor: korRef.current.value,
         isDone: false,
-      }).then((res) => {
-        if (res.ok) {
-          alert("생성이 완료 되었습니다");
-          history.push(`/day/${dayRef.current.value}`);
-        }
       }),
+    }).then((res) => {
+      if (res.ok) {
+        alert("생성이 완료 되었습니다");
+        navigate(`/day/${dayRef.current.value}`);
+      }
     });
   }
 
-  const engRef = useRef(null);
-  const korRef = useRef(null);
-  const dayRef = useRef(null);
   return (
     <form onSubmit={onSubmit}>
       <div className="input_area">
@@ -37,16 +38,17 @@ export default function CreateWord() {
         <input type="text" placeholder="computer" ref={engRef}></input>
       </div>
       <div className="input_area">
+        <label>kor</label>
         <input type="text" placeholder="컴퓨터" ref={korRef}></input>
       </div>
-      <div className="input_area" ref={dayRef}>
-        <select>
+      <div className="input_area">
+        <label>day</label>
+        <select ref={dayRef}>
           {days.map((day) => (
             <option key={day.id} value={day.day}>
-              1
+              {day.day}
             </option>
           ))}
-          <option>2</option>
         </select>
       </div>
       <button>저장</button>
