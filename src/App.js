@@ -1,9 +1,10 @@
 import DayList from "./component/DayList";
 import Header from "./component/Header";
-import Day from "./component/Day.js";
+import Day from "./component/Day";
 import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import EmptyPage from "./component/EmptyPage.js";
+import EmptyPage from "./component/EmptyPage";
+import CreateWord from "./component/createWord.js";
 
 function App() {
   return (
@@ -11,8 +12,9 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route exact path="/" element={<DayList />} />
+          <Route path="/" element={<DayList />} />
           <Route path="/day/:day" element={<Day />} />
+          <Route path="/create_word" element={<CreateWord />} />
           <Route path="*" element={<EmptyPage />} />
         </Routes>
       </BrowserRouter>
