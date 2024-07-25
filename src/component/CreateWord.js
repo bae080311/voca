@@ -1,7 +1,6 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import useFetch from "../Hooks/useFetch";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 export default function CreateWord() {
   const days = useFetch("http://localhost:3000/days");
@@ -57,8 +56,7 @@ export default function CreateWord() {
           ))}
         </select>
       </div>
-      <button>
-        style={{ opacity: isLoading ? 0.3 : 1 }}
+      <button style={{ opacity: isLoading ? 0.3 : 1 }}>
         {isLoading ? "Saving..." : "저장"}
       </button>
     </form>
